@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+body {
+  font-family: "Montserrat";
+  background-color: black;
+  color: whitesmoke;
+}
+
+.name-head {
+  font-family: Bricolage Grotesque;
+  font-weight: 700;
+}
+
+.bdr-grad{
+ border-width: 1px;
+  border-style: solid;
+  border-radius: 20px;
+  border-image: linear-gradient(45deg, #3107b1, #89a9ce, #e5e6e7) 1;
+}
+#cursor {
+  height: 25px;
+  width: 25px;
+  background-color: #041465;
+  border-radius: 50%;
+  position: fixed;
+  z-index: -1;
+}
+#cursor-blur {
+  height: 500px;
+  width: 500px;
+  background-color: rgba(100, 138, 213, 0.3);
+  border-radius: 50%;
+  position: fixed;
+  filter: blur(80px);
+  z-index: -9;
+}
