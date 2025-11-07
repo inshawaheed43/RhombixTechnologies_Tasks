@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import img1 from '../assets/img-set1.png'
 import img4 from "../assets/img4.png"
 import { Link } from "react-router-dom"
@@ -12,9 +12,9 @@ import skill4 from "../assets/skill4.png"
 import skill5 from "../assets/skill5.png"
 import Footer from "../components/Footer"
 // import Cursor from '../components/cursor.jsx'
-
-
-
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import gsap from "gsap"
+  gsap.registerPlugin(ScrollTrigger);
 export default function Home() {
   // ✅ Your project data (edit this anytime)
   const projectsData = [
@@ -45,14 +45,135 @@ export default function Home() {
 
   ];
 
+   const main = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+
+      // ✅ Intro animation
+      gsap.from("#intro-head", {
+        y: 100,
+        opacity: 0,
+        duration: 1,
+        ease: "power1.out",
+      });
+
+      gsap.from("#intro-right-sec", {
+        x: 90,
+        opacity: 0,
+        duration: 1,
+        ease: "power1.out",
+      });
+
+      gsap.from("#intro-left-sec", {
+        x: -90,
+        opacity: 0,
+        duration: 1,
+        ease: "power1.out",
+      });
+
+      // ✅ About section
+      gsap.from("#about-sec", {
+        opacity: 0,
+        y: 90,
+        duration: 1,
+        ease: "power1.out",
+        scrollTrigger: {
+          trigger: "#about-sec",
+          start: "top 85%",
+        }
+      });
+
+      gsap.from("#about-img", {
+        opacity: 0,
+        y: 90,
+        duration: 1,
+        ease: "power1.out",
+        scrollTrigger: {
+          trigger: "#about-img",
+          start: "top 85%",
+        }
+      });
+
+      // ✅ Education + Certificates side-by-side
+      gsap.from("#education-sec", {
+        opacity: 0,
+        x: -90,
+        duration: 1,
+        ease: "power1.out",
+        scrollTrigger: {
+          trigger: "#education-sec",
+          start: "top 85%",
+        }
+      });
+
+      gsap.from("#certificate", {
+        opacity: 0,
+        x: 90,
+        duration: 1,
+        ease: "power1.out",
+        scrollTrigger: {
+          trigger: "#certificate",
+          start: "top 85%",
+        }
+      });
+
+      // ✅ Skill cards
+      gsap.from(".skill-card", {
+        opacity: 0,
+        y: 50,
+        duration: 0.8,
+        ease: "power2.out",
+        stagger: 0.3,
+        scrollTrigger: {
+          trigger: ".skill-card",
+          start: "top 80%",
+        }
+      });
+
+      // ✅ Project cards
+      gsap.from(".project-card", {
+        opacity: 0,
+        y: 50,
+        duration: 0.8,
+        ease: "power2.out",
+        stagger: 0.3,
+        scrollTrigger: {
+          trigger: ".project-card",
+          start: "top 80%",
+        }
+      });
+
+      // ✅ Certificates
+      gsap.from(".cert-sec", {
+        opacity: 0,
+        y: 50,
+        duration: 0.8,
+        ease: "power1.out",
+        stagger: 0.3,
+        scrollTrigger: {
+          trigger: ".cert-sec",
+          start: "top 80%",
+        }
+      });
+
+    }, main);
+
+    ScrollTrigger.refresh(); // ✅ Fixes disappearing triggers
+
+    return () => ctx.revert(); // ✅ Cleanup on unmount
+  }, []);
+
+
+
   return (
-    <div>
-      {/* <Cursor/> */}
+    <div ref={main}>
+
       {/* INTRO DIV */}
       <div className='  w-[90vw] ml-20 mr-20 mt-10 h-[90vh] align-middle justify-between flex flex-col items-center'>
 
         {/* div for name and pic */}
-        <div className='flex flex-col position relative items-center top-[8vw] h-[80vh]'>
+        <div id='intro-head' className='flex flex-col position relative items-center top-[8vw] h-[80vh]'>
           <img src={img4} alt="" className='w-[50vw]' />
           <h1 className='text-[20vw] position relative top-[-44vh] name-head'>
             Insha W.
@@ -63,12 +184,14 @@ export default function Home() {
         {/* div for two section for about */}
         <div className='position top-[-64vh] relative w-[90vw] h-[35vh] flex flex-row items-center align-middle justify-center gap-[20vw]'>
 
-          <section className='float-left w-[35vw] h-[30vh] '>
+          <section id='intro-left-sec' className='float-left w-[35vw] h-[30vh] '>
             <p className='shadow-lg rounded-4xl text-center gap-2 position relative flex flex-row pl-4 pt-2 pb-2 pr-2  bg-blue-950 w-[13vw]'><span className='bg-white border h-4 shadow-2xl rounded-xl top-[0.4vh] position relative w-4'></span>Available for Work</p>
             <h1 className='text-[35px] font-bold '>Frontend Developer <br /> & Jr MERN Stack Developer <br />from Pakistan.</h1>
 
           </section>
-          <section className='float-right w-[30vw] h-[30vh] '>
+
+
+          <section id='intro-right-sec' className='float-right w-[30vw] h-[30vh] '>
 
 
             <p className='text-xl'>Hi! I'm Insha Waheed - Frontend Developer and junior MERN Stack Developer aimed at creating seamless user experience and frontend, that actually interacts.  </p>
@@ -91,7 +214,7 @@ export default function Home() {
 
         <div className=' w-[90vw]  flex flex-row h-60vh mt-24'>
 
-          <div className='flex mt-7 ml-5 flex-col  w-[40vw] '>
+          <div className='flex mt-7 ml-5 flex-col  w-[40vw]  ' id='about-sec'>
             <h1 className='text-5xl font-bold '>I work for Money - That's about me!</h1>
             <p className='w-[35vw] text-[15px] mt-4'>The statement is odd - but everyone does the same! I love to earn money, but I also love to play with errors & mistakes. That may I do intentionally!
               <br /><br />
@@ -116,7 +239,7 @@ export default function Home() {
 
 
 
-          <img src={img1} alt="" className='w-[45vw] h-[50vh] rounded-3xl  ' />
+          <img id='about-img' src={img1} alt="" className='w-[45vw] h-[50vh] rounded-3xl  ' />
         </div>
 
 
@@ -125,7 +248,7 @@ export default function Home() {
       {/* Education Section */}
       <div className=' flex items-center justify-center'>
         <div className='  w-[90vw] h-auto gap-10 p-5  flex flex-row'>
-          <div className='float-left flex flex-col w-[38vw] gap-5  h-[90vh]  p-5'>
+          <div id='education-sec' className='float-left flex flex-col w-[38vw] gap-5  h-[90vh]  p-5'>
             <h1 className='flex text-5xl font-bold '>Education</h1>
 
             <div className='bdr-grad border w-[30vw] h-auto p-3 rounded-xl'>
@@ -170,9 +293,9 @@ export default function Home() {
           </div>
 
           {/* CERTIFICATIONS */}
-          <div className='float-right w-[50vw] gap-10  h-[90vh]  p-5'>
+          <div id='certificate' className='float-right w-[50vw] gap-10  h-[90vh]  p-5'>
             <h1 className='flex text-5xl font-bold '>Certifications</h1>
-            <div className="relative p-4 mt-4">
+            <div className=" cert-sec relative p-4 mt-4">
 
               <h2 className='text-2xl'>
                 Responsive Web Design
@@ -195,7 +318,7 @@ export default function Home() {
             </div>
 
 
-            <div className="relative p-4 mt-2">
+            <div className=" cert-sec relative p-4 mt-2">
 
               <h2 className='text-2xl'>
                 CCST Cybersecurity
@@ -223,7 +346,7 @@ export default function Home() {
             </div>
 
 
-            <div className="relative p-4 mt-2">
+            <div className=" cert-sec relative p-4 mt-2">
 
               <h2 className='text-2xl'>
                 Introduction to CSS
@@ -265,7 +388,7 @@ export default function Home() {
           {projectsData.map((project) => (
             <div
               key={project.id}
-              className="relative group w-full h-[360px] rounded-xl overflow-hidden "
+              className=" project-card relative group w-full h-[360px] rounded-xl overflow-hidden "
             >
               {/* Project Image */}
               <img
@@ -309,7 +432,7 @@ export default function Home() {
           <div
             className=' items-center gap-6 align-middle justify-center flex flex-row'>
 
-            <div className="bdr-grad  p-2 items-center flex flex-col justify-center m-2 rounded-2xl w-[15vw] h-[20vw] ">
+            <div className="skill-card bdr-grad  p-2 items-center flex flex-col justify-center m-2 rounded-2xl w-[15vw] h-[20vw] ">
               <img src={skill4} className='rounded-full w-[10vw] h-[20vh]' alt="" />
 
 
@@ -320,7 +443,7 @@ export default function Home() {
                 <p>- <b>Async & Sync</b> Functions </p>
               </div>
             </div>
-            <div className="bdr-grad p-2 items-center flex flex-col justify-center m-2 rounded-2xl w-[15vw] h-[20vw]">
+            <div className="skill-card bdr-grad p-2 items-center flex flex-col justify-center m-2 rounded-2xl w-[15vw] h-[20vw]">
 
               <img src={skill5} className='rounded-full w-[10vw] h-[20vh]' alt="" />
 
@@ -332,7 +455,7 @@ export default function Home() {
                 <p>-React + Vite Integration</p>
               </div>
             </div>
-            <div className=" bdr-grad p-2 items-center flex flex-col justify-center m-2 rounded-2xl w-[15vw] h-[20vw] ">
+            <div className="skill-card  bdr-grad p-2 items-center flex flex-col justify-center m-2 rounded-2xl w-[15vw] h-[20vw] ">
               <img src={skill3} className='rounded-full w-[10vw] h-[20vh]' alt="" />
 
 
@@ -348,7 +471,7 @@ export default function Home() {
 
               </div>
             </div>
-            <div className="bdr-grad p-2 items-center flex flex-col justify-center m-2 rounded-2xl w-[15vw] h-[20vw] ">
+            <div className="skill-card bdr-grad p-2 items-center flex flex-col justify-center m-2 rounded-2xl w-[15vw] h-[20vw] ">
               <img src={skill2} className='rounded-full w-[10vw] h-[20vh]' alt="" />
 
 
@@ -359,7 +482,7 @@ export default function Home() {
                 <p>- Animations & Transitions</p>
               </div>
             </div>
-            <div className="bdr-grad p-2 items-center flex flex-col justify-center m-2 rounded-2xl w-[15vw] h-[20vw]">
+            <div className="skill-card bdr-grad p-2 items-center flex flex-col justify-center m-2 rounded-2xl w-[15vw] h-[20vw]">
               <img src={skill1} className='rounded-full w-[10vw] h-[20vh] position relative top-[-3vh] ' alt="" />
 
 
@@ -389,9 +512,9 @@ export default function Home() {
 
 
 
-{/* FOOTER */}
+      {/* FOOTER */}
 
-<Footer/>
+      <Footer />
 
 
     </div>

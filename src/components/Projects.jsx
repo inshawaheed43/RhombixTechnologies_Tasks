@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import project1 from "../assets/Project1.png"
 import project4 from "../assets/Project4.png"
 import project3 from "../assets/Project3.png"
 import Footer from './Footer'
-
+import gsap from "gsap"
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+    gsap.registerPlugin(ScrollTrigger);
 export default function Projects() {
 
   const projects = [
@@ -43,6 +45,21 @@ link: "https://inshawaheed43.github.io/GolfSite-GSAP/",
   ]
 
 
+
+  useEffect(() => {
+    gsap.from(".project-sec", {
+      opacity: 0,
+      y: -50,
+      duration: 0.8,
+      ease: "power1.out",
+      stagger: 0.4, // 🔥 shows one after another
+      scrollTrigger: {
+        trigger: ".project-sec",
+        start: "top 70%",
+      }
+    })
+  }, [])
+
   return (
     <div className=' mb-20'>
 
@@ -57,7 +74,7 @@ link: "https://inshawaheed43.github.io/GolfSite-GSAP/",
           {projects.map((project)=>(
 
 
-          <div key={project.id} className=' w-auto h-[37vh] rounded-2xl mx-16 '>
+          <div key={project.id} className='project-sec w-auto h-[37vh] rounded-2xl mx-16 '>
 {/*
 img buttons links
 */}

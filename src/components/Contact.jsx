@@ -1,7 +1,37 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Footer from "./Footer";
+import gsap from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export default function Contact() {
+  gsap.registerPlugin(ScrollTrigger);
+
+   useEffect(() => {
+    gsap.from(".left-sec", {
+      opacity: 0,
+      x: -50,
+      duration: 0.8,
+      ease: "power1.out",
+      stagger: 0.6, // 🔥 shows one after another
+      scrollTrigger: {
+        trigger: ".left-sec",
+        start: "top 80%",
+      }
+    }),
+     gsap.from(".right-sec", {
+      opacity: 0,
+      x: 50,
+      duration: 0.8,
+      ease: "power1.out",
+      stagger: 0.6, // 🔥 shows one after another
+      scrollTrigger: {
+        trigger: ".right-sec",
+        start: "top 80%",
+      }
+    })
+  }, [])
+
+
   return (
     <div className="w-full min-h-screen pt-32 px-10">
     
@@ -10,7 +40,7 @@ export default function Contact() {
       <div className="max-w-[70vw] mx-auto flex flex-col lg:flex-row gap-3">
 
         {/* LEFT SIDE */}
-        <div className="flex-1 mx-8 my-7 p-6">
+        <div className=" left-sec flex-1 mx-8 my-7 p-6">
           <h1 className="text-5xl font-bold my-5">Get in Touch</h1>
 
           <p className="text-xl font-semibold mb-6">
@@ -56,7 +86,7 @@ export default function Contact() {
         </div>
 
         {/* RIGHT SIDE (FORM) */}
-        <div className="flex-1 mt-10">
+        <div className="flex-1 mt-10 right-sec">
           <form className="flex flex-col gap-6">
 
             {/* Name Inputs */}
